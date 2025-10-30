@@ -76,8 +76,9 @@
           <li class="submenu-open">
             <h6 class="submenu-hdr">Stock</h6>
             <ul>
-              <li><RouterLink to="/stocks"><i data-feather="package"></i><span>Manage
-                    Stock</span></RouterLink></li>
+              <li>
+                <RouterLink to="/stocks"><i data-feather="package"></i><span>Stock Details</span></RouterLink>
+              </li>
 
               <!-- <li><a href="stock-adjustment.html"><i data-feather="clipboard"></i><span>Stock
                   Adjustment</span></a></li>
@@ -91,7 +92,9 @@
               <li>
                 <RouterLink to="/orders"><i data-feather="shopping-cart"></i><span>Orders</span></RouterLink>
               </li>
-              <li><RouterLink to="/orderDetails"><i data-feather="file-text"></i><span>Order Details</span></RouterLink></li>
+              <li>
+                <RouterLink to="/orderDetails"><i data-feather="file-text"></i><span>Order Details</span></RouterLink>
+              </li>
 
               <!-- <li><a href="sales-returns.html"><i data-feather="copy"></i><span>Sales
                   Return</span></a></li>
@@ -110,13 +113,16 @@
           <li class="submenu-open">
             <h6 class="submenu-hdr">Purchases</h6>
             <ul>
-              <li><RouterLink to="/purchase"><i data-feather="shopping-bag"></i><span>Purchases</span></RouterLink></li>
+              <li>
+                <RouterLink to="/purchases"><i data-feather="shopping-bag"></i><span>Purchases</span></RouterLink>
+              </li>
               <li>
                 <RouterLink to="/purchaseDetails"><i data-feather="file-minus"></i><span>Purchase
                     Details</span></RouterLink>
               </li>
-              <li><a href="purchase-returns.html"><i data-feather="refresh-cw"></i><span>Purchase
-                    Return</span></a></li>
+              <!-- <li><a href="purchase-returns.html"><i data-feather="refresh-cw"></i><span>Purchase
+                    Return</span></a>
+              </li> -->
             </ul>
           </li>
           <!-- <li class="submenu-open">
@@ -200,8 +206,9 @@
                 <RouterLink to="/purchaseReport"><i data-feather="pie-chart"></i><span>Purchase
                     report</span></RouterLink>
               </li>
-              <li><a href="inventory-report.html"><i data-feather="inbox"></i><span>Stocks
-                    Report</span></a></li>
+              <!-- <li><a href="inventory-report.html"><i data-feather="inbox"></i><span>Stocks
+                    Report</span></a>
+              </li> -->
 
 
               <!-- <li><a href="invoice-report.html"><i data-feather="file"></i><span>Invoice
@@ -226,10 +233,11 @@
               <li>
                 <RouterLink to="/users"><i data-feather="user-check"></i><span>Users</span></RouterLink>
               </li>
-              <li><a href="roles-permissions.html"><i data-feather="shield"></i><span>Roles &
+              <!-- <li><a href="roles-permissions.html"><i data-feather="shield"></i><span>Roles &
                     Permissions</span></a></li>
               <li><a href="delete-account.html"><i data-feather="lock"></i><span>Delete Account
-                    Request</span></a></li>
+                    Request</span></a>
+              </li> -->
             </ul>
           </li>
 
@@ -453,7 +461,7 @@
             </li>
           </ul>
         </li> -->
-          <li class="submenu-open">
+          <!-- <li class="submenu-open">
             <h6 class="submenu-hdr">Help</h6>
             <ul>
               <li><a href="javascript:void(0);"><i data-feather="file-text"></i><span>Documentation</span></a></li>
@@ -480,7 +488,7 @@
                 </ul>
               </li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>

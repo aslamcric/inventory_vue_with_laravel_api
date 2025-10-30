@@ -33,11 +33,9 @@
                                 <th>Customer Name</th>
                                 <th>Order Total</th>
                                 <th>Discount</th>
-                                <th>Paid Amount</th>
                                 <th>VAT</th>
                                 <th>Order Date</th>
                                 <th>Delivery Date</th>
-                                <th>Status</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -55,24 +53,14 @@
                                 <td>{{ order.customers?.name || 'N/A' }}</td>
                                 <td>{{ order.order_total }}</td>
                                 <td>{{ order.discount }}</td>
-                                <td>{{ order.paid_amount }}</td>
                                 <td>{{ order.vat }}</td>
                                 <td>{{ order.order_date }}</td>
                                 <td>{{ order.delivery_date }}</td>
-                                <td>{{ order.statuse?.name || 'N/A' }}</td>
 
                                 <td class="text-center btn btn-group">
                                     <RouterLink :to="`/orders/show/${order.id}`" class="btn btn-sm btn-primary me-2">
                                         <i class="fas fa-eye"></i>
                                     </RouterLink>
-
-                                    <!-- <RouterLink :to="`/orders/edit/${order.id}`" class="btn btn-sm btn-success me-2">
-                                        <i class="fas fa-edit"></i>
-                                    </RouterLink> -->
-
-                                    <!-- <button class="btn btn-sm btn-danger" @click="deleteOrder(order.id)">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -134,20 +122,6 @@ const formatPageLabel = (label) => {
     return label;
 };
 
-// Optional: deleteOrder (Uncomment when ready)
-// const deleteOrder = (id) => {
-//     api
-//         .delete(`/orders/${id}`)
-//         .then((res) => {
-//             console.log(res);
-//             if (res.data.orders) {
-//                 fetchOrders();
-//             }
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };
 </script>
 
 

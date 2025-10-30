@@ -10,7 +10,7 @@
                 <div class="invoice-address mb-4">
                   <h6 class="fw-bold mb-2 text-primary">Order Invoice From:</h6>
                   <ul class="list-unstyled">
-                    <li>Laravel POS</li>
+                    <li>Smart Inventory & Billing System</li>
                     <li>Dhaka, Bangladesh</li>
                     <li>Phone: 01793 956 777</li>
                     <li>Email: mdaslamcric@gmail.com</li>
@@ -62,7 +62,7 @@
                       <textarea class="form-control" v-model="dataObj.selectedProduct.description" disabled></textarea>
                     </th>
                     <th>
-                      <input type="text" class="form-control" v-model="dataObj.selectedProduct.offer_price" disabled>
+                      <input type="text" class="form-control" v-model="dataObj.selectedProduct.price" disabled>
                     </th>
                     <th>
                       <input type="number" class="form-control" v-model="dataObj.qty" min="1">
@@ -156,8 +156,8 @@ const dataObj = reactive({
 
 // Computed Subtotal for Single Row
 const calculatedSubtotal = computed(() => {
-  if (dataObj.selectedProduct && dataObj.selectedProduct.offer_price) {
-    let price = dataObj.selectedProduct.offer_price;
+  if (dataObj.selectedProduct && dataObj.selectedProduct.price) {
+    let price = dataObj.selectedProduct.price;
     let qty = dataObj.qty || 1;
     let discount = dataObj.discount || 0;
     return (price * qty) - discount;
@@ -188,13 +188,13 @@ const addToCart = () => {
 
   // let calculate_discount = dataObj.discount * dataObj.qty;
   let calculate_discount = dataObj.discount;
-  let subtotal = (dataObj.selectedProduct.offer_price * dataObj.qty) - calculate_discount;
+  let subtotal = (dataObj.selectedProduct.price * dataObj.qty) - calculate_discount;
 
   const data = {
     item_id: dataObj.selectedProduct.id,
     name: dataObj.selectedProduct.name,
     description: dataObj.selectedProduct.description,
-    price: dataObj.selectedProduct.offer_price,
+    price: dataObj.selectedProduct.price,
     discount: calculate_discount,
     qty: dataObj.qty,
     subtotal: subtotal
@@ -226,6 +226,8 @@ const clearCart = () => {
 
 // Process Order (Send to API)
 const processOrder = () => {
+  if (!dataObj.selectedCustomer.id) return alert("Select Customer");
+
   const processData = {
     products: cart.getCart(),
     customer: dataObj.selectedCustomer,
@@ -239,6 +241,7 @@ const processOrder = () => {
     .then(result => {
       console.log(result.data);
       clearCart();
+      dataObj.selectedSupplier = {};
       router.push('/orders')
     })
     .catch(err => {

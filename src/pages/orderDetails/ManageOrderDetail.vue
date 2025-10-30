@@ -15,11 +15,6 @@
                             </span>
                         </div>
                     </form>
-
-                    <!-- Add Order Item button -->
-                    <!-- <RouterLink to="/order-items/create" class="btn btn-dark">
-                        Add New Order Item
-                    </RouterLink> -->
                 </div>
 
                 <!-- Table -->
@@ -33,9 +28,7 @@
                                 <th>Quantity</th>
                                 <th>Price</th>
                                 <th>VAT</th>
-                                <!-- <th>UOM ID</th> -->
                                 <th>Discount</th>
-                                <!-- <th class="text-center">Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -51,7 +44,6 @@
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.order_id }}</td>
                                 <td>{{ item.product.name }}</td>
-                                <!-- <td>{{ item.product_id }}</td> -->
                                 <td>{{ item.qty }}</td>
                                 <td>{{ item.price }}</td>
                                 <td>{{ item.vat }}</td>

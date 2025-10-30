@@ -33,7 +33,7 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Category</th>
-                <th>Stock</th>
+                <!-- <th>Stock</th> -->
                 <th>Description</th>
                 <th class="text-center">Action</th>
               </tr>
@@ -51,9 +51,8 @@
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.price }}</td>
-                <!-- <td>{{ product.categories?.name || 'N/A' }}</td> -->
                 <td>{{ product.category?.name || 'N/A' }}</td>
-                <td>{{ product.stock }}</td>
+                <!-- <td>{{ product.stock }}</td> -->
                 <td>{{ product.description }}</td>
 
                 <td class="text-center btn btn-group">

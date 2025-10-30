@@ -4,39 +4,31 @@
             <div class="card shadow-sm border-0">
                 <div class="card-body p-4">
                     <div class="invoice-wrap">
-                        <div class="row">
-                            <!-- From Address -->
+                        <!-- Supplier Section -->
+                        <div class="row mb-4">
                             <div class="col-md-6">
-                                <div class="invoice-address mb-4">
-                                    <h6 class="fw-bold mb-2 text-primary">Purchase Invoice From:</h6>
-                                    <ul class="list-unstyled">
-                                        <li>Laravel POS</li>
-                                        <li>Dhaka, Bangladesh</li>
-                                        <li>Phone: 01793 956 777</li>
-                                        <li>Email: mdaslamcric@gmail.com</li>
-                                    </ul>
-                                </div>
+                                <h6 class="fw-bold mb-2 text-primary">Purchase Invoice From:</h6>
+                                <ul>
+                                    <li>Smart Inventory & Billing System</li>
+                                    <li>Dhaka, Bangladesh</li>
+                                    <li>Phone: 01793 956 777</li>
+                                    <li>Email: mdaslamcric@gmail.com</li>
+                                </ul>
                             </div>
-
-                            <!-- Supplier Select -->
                             <div class="col-md-3">
-                                <div class="invoice-address text-start mb-4">
-                                    <h6 class="fw-bold mb-2 text-primary">Invoice To:</h6>
+                                <h6 class="fw-bold mb-2 text-primary">Invoice To:</h6>
+                                <select v-model="dataObj.selectedSupplier" class="form-control mb-2">
                                     <option value="">Select Supplier</option>
-
-                                    <select v-model="dataObj.selectedSupplier" class="form-control mb-2">
-                                        <option v-for="s in suppliers" :key="s.id" :value="s">{{ s.name }}</option>
-                                    </select>
-
-                                    <p>Address: <span>{{ dataObj.selectedSupplier.address || 'N/A' }}</span></p>
-                                    <p>Email: <span>{{ dataObj.selectedSupplier.email || 'N/A' }}</span></p>
-                                    <p>Phone: <span>{{ dataObj.selectedSupplier.phone || 'N/A' }}</span></p>
-                                </div>
+                                    <option v-for="s in suppliers" :key="s.id" :value="s">{{ s.name }}</option>
+                                </select>
+                                <p>Address: <span>{{ dataObj.selectedSupplier.address || 'N/A' }}</span></p>
+                                <p>Email: <span>{{ dataObj.selectedSupplier.email || 'N/A' }}</span></p>
+                                <p>Phone: <span>{{ dataObj.selectedSupplier.phone || 'N/A' }}</span></p>
                             </div>
                         </div>
 
                         <!-- Product Table -->
-                        <div class="table-responsive mt-2">
+                        <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="table-light text-white bg-primary">
                                     <tr>
@@ -47,39 +39,30 @@
                                         <th>Qty</th>
                                         <th>Discount</th>
                                         <th>Subtotal</th>
-                                        <th><button @click="clearCart" class="btn btn-danger">Clear All</button></th>
+                                        <th>
+                                            <button @click="clearCart" class="btn btn-danger">Clear All</button>
+                                        </th>
                                     </tr>
-                                    <!-- Add New Product Row -->
+                                    <!-- Add Product Row -->
                                     <tr>
                                         <th>#</th>
                                         <th>
-                                            <option value="">Select Product</option>
                                             <select v-model="dataObj.selectedProduct" class="form-control">
+                                                <option value="">Select Product</option>
                                                 <option v-for="p in products" :key="p.id" :value="p">{{ p.name }}
                                                 </option>
                                             </select>
                                         </th>
-                                        <th>
-                                            <textarea class="form-control" v-model="dataObj.selectedProduct.description"
-                                                disabled></textarea>
+                                        <th><textarea class="form-control" v-model="dataObj.selectedProduct.description"
+                                                disabled></textarea></th>
+                                        <th><input type="text" class="form-control"
+                                                v-model="dataObj.selectedProduct.price" disabled></th>
+                                        <th><input type="number" class="form-control" v-model="dataObj.qty" min="1">
                                         </th>
-                                        <th>
-                                            <input type="text" class="form-control"
-                                                v-model="dataObj.selectedProduct.price" disabled>
-                                        </th>
-                                        <th>
-                                            <input type="number" class="form-control" v-model="dataObj.qty" min="1">
-                                        </th>
-                                        <th>
-                                            <input type="number" class="form-control" v-model="dataObj.discount">
-                                        </th>
-                                        <th>
-                                            <input type="text" class="form-control" :value="calculatedSubtotal"
-                                                disabled>
-                                        </th>
-                                        <th>
-                                            <button @click="addToCart" class="btn btn-success">Add</button>
-                                        </th>
+                                        <th><input type="number" class="form-control" v-model="dataObj.discount"></th>
+                                        <th><input type="text" class="form-control" :value="calculatedSubtotal"
+                                                disabled></th>
+                                        <th><button @click="addToCart" class="btn btn-success">Add</button></th>
                                     </tr>
                                 </thead>
 
@@ -95,6 +78,9 @@
                                         <td>{{ item.subtotal }}</td>
                                         <td><button @click="itemRemove(item.item_id)"
                                                 class="btn btn-warning">Remove</button></td>
+                                    </tr>
+                                    <tr v-if="cartItems.length === 0">
+                                        <td colspan="8" class="text-center text-danger">No items in cart</td>
                                     </tr>
                                 </tbody>
 
@@ -122,7 +108,9 @@
 
                         <!-- Process Button -->
                         <div class="d-flex justify-content-end mt-4">
-                            <button @click="processPurchase" class="btn btn-success">Process</button>
+                            <button @click="processPurchase" class="btn btn-success" :disabled="cartItems.length === 0">
+                                Process
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -132,7 +120,6 @@
 </template>
 
 <script setup>
-// Imports
 import api from '@/Api';
 import { ref, reactive, onMounted, computed } from 'vue';
 import { useCart } from '../cart/Cart';
@@ -158,20 +145,15 @@ const dataObj = reactive({
     grandTotal: 0,
 });
 
-// Computed Subtotal for Single Row
+// Computed Subtotal for Current Row
 const calculatedSubtotal = computed(() => {
-    if (dataObj.selectedProduct && dataObj.selectedProduct.price) {
-        let price = dataObj.selectedProduct.price;
-        let qty = dataObj.qty || 1;
-        let discount = dataObj.discount || 0;
-        return (price * qty) - discount;
-    }
-    return 0;
+    if (!dataObj.selectedProduct.price) return 0;
+    return (dataObj.selectedProduct.price * dataObj.qty) - (dataObj.discount || 0);
 });
 
+// Grand Total Calculation
 const grandTotalCalculation = () => {
     const cartList = cart.getCart();
-
     const subtotalBeforeDiscount = cartList.reduce((acc, ele) => acc + (ele.price * ele.qty), 0);
     const totalDiscount = cartList.reduce((acc, ele) => acc + ele.discount, 0);
     const subtotalAfterDiscount = subtotalBeforeDiscount - totalDiscount;
@@ -186,24 +168,22 @@ const grandTotalCalculation = () => {
 
 // Add to Cart
 const addToCart = () => {
-    if (!dataObj.selectedProduct.id) return; // ✅ check product selected
+    if (!dataObj.selectedProduct.id) return;
 
-    let calculate_discount = dataObj.discount;
-    let subtotal = (dataObj.selectedProduct.price * dataObj.qty) - calculate_discount;
+    const subtotal = (dataObj.selectedProduct.price * dataObj.qty) - (dataObj.discount || 0);
 
-    const data = {
+    cart.save({
         item_id: dataObj.selectedProduct.id,
         name: dataObj.selectedProduct.name,
         description: dataObj.selectedProduct.description,
         price: dataObj.selectedProduct.price,
-        discount: calculate_discount,
+        discount: dataObj.discount,
         qty: dataObj.qty,
-        subtotal: subtotal
-    }
+        subtotal
+    });
 
-    cart.save(data);
     cartItems.value = cart.getCart();
-    grandTotalCalculation(); // ✅ must recalculate
+    grandTotalCalculation();
 
     // Reset Form
     dataObj.selectedProduct = {};
@@ -211,22 +191,24 @@ const addToCart = () => {
     dataObj.discount = 0;
 }
 
-// Remove item from Cart
+// Remove Item
 const itemRemove = (id) => {
     cart.deleteItem(id);
     cartItems.value = cart.getCart();
-    grandTotalCalculation(); // ✅ must recalculate
+    grandTotalCalculation();
 }
 
-// Clear entire Cart
+// Clear Cart
 const clearCart = () => {
     cart.clearCart();
     cartItems.value = cart.getCart();
-    grandTotalCalculation(); // ✅ must recalculate
+    grandTotalCalculation();
 }
 
-// Process Purchase (Send to API)
+// Process Purchase
 const processPurchase = () => {
+    if (!dataObj.selectedSupplier.id) return alert("Select supplier");
+
     const processData = {
         products: cart.getCart(),
         supplier: dataObj.selectedSupplier,
@@ -234,33 +216,36 @@ const processPurchase = () => {
         paid_amount: dataObj.grandTotal,
         discount: dataObj.totalDiscount,
         vat: dataObj.tax,
+        purchase_date: new Date().toISOString().split('T')[0],
     };
 
-    api.post("/purchase/processOrder", processData)
+    api.post("/purchase/processPurchase", processData)
         .then(result => {
             console.log(result.data);
             clearCart();
-            router.push('/purchase')
+            dataObj.selectedSupplier = {};
+            router.push('/purchases');
+
         })
         .catch(err => {
             console.log(err);
         });
 }
 
-// Fetch Suppliers and Products
+// Fetch Suppliers & Products
 const purchaseData = () => {
-    api.get("/purchase/data")
+    api.get("/purchases/data")
         .then(result => {
             console.log(result.data);
             suppliers.value = result.data.suppliers;
             products.value = result.data.products;
         })
-        .catch(err => {
-            console.log(err);
-        });
+        .catch(err =>
+            console.log(err)
+        );
 }
 
-// Load on Page Mount
+// Load on Mounted
 onMounted(() => {
     purchaseData();
 });

@@ -103,7 +103,7 @@ const showOrders = (id) => {
         .get(`/vueorder/show/${id}`)
         .then((res) => {
             console.log(res.data.order);
-            
+
             order.value = res.data.order[0];
         })
         .catch((err) => {
@@ -136,10 +136,7 @@ const subtotal = computed(() => {
 
 // Computed Total Discount
 const totalDiscount = computed(() => {
-    if (!order.value.order_details) return 0;
-    return order.value.order_details.reduce((acc, item) => {
-        return acc + item.discount;
-    }, 0);
+    return parseFloat(order.value.discount || 0);
 });
 
 // Computed Tax (5% of subtotal)

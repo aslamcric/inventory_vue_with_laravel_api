@@ -30,10 +30,10 @@
                 </select>
               </div>
 
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <label for="stock" class="form-label">Stock</label>
                 <input v-model="productData.stock" type="text" class="form-control" id="stock" placeholder="Enter Stock" />
-              </div>
+              </div> -->
 
               <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
