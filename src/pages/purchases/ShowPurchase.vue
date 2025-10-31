@@ -55,7 +55,7 @@
                 <td class="fw-bold">{{ format(subtotal) }}</td>
               </tr>
               <tr>
-                <td colspan="5" class="text-end fw-bold">Tax ({{ purchase.vat || 5 }}%)</td>
+                <td colspan="5" class="text-end fw-bold">Tax (5%)</td>
                 <td class="fw-bold">{{ format(tax) }}</td>
               </tr>
               <tr>
@@ -126,10 +126,9 @@ const totalDiscount = computed(() => {
   return parseFloat(purchase.value.discount || 0);
 });
 
-// Computed Tax
+// Computed Tax (5% of subtotal)
 const tax = computed(() => {
-  const vatPercent = parseFloat(purchase.value.vat || 5);
-  return (subtotal.value * vatPercent) / 100;
+  return (subtotal.value * 5) / 100;
 });
 
 // Computed Grand Total
