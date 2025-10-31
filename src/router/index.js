@@ -51,6 +51,10 @@ import ManagePurchaseDetail from "@/pages/purchaseDetail/ManagePurchaseDetail.vu
 import ManageStock from "@/pages/stocks/ManageStock.vue";
 import OrderReport from "@/pages/reports/OrderReport.vue";
 import PurchaseReport from "@/pages/reports/PurchaseReport.vue";
+import ShowProduct from "@/pages/products/ShowProduct.vue";
+import ShowCategory from "@/pages/categories/ShowCategory.vue";
+import ShowCustomer from "@/pages/customers/ShowCustomer.vue";
+import ShowSupplier from "@/pages/suppliers/ShowSupplier.vue";
 
 const routes = [
   // Public route: Login
@@ -68,21 +72,25 @@ const routes = [
       { path: "categories", component: ManageCategory },
       { path: "categories/create", component: CreateCategory },
       { path: "categories/edit/:id", component: UpdateCategory },
+      { path: "categories/show/:id", component: ShowCategory },
 
       // Customers
       { path: "customers", component: ManageCustomer },
       { path: "customers/create", component: CreateCustomer },
       { path: "customers/edit/:id", component: UpdateCustomer },
+      { path: "customers/show/:id", component: ShowCustomer },
 
       // Suppliers
       { path: "suppliers", component: ManageSupplier },
       { path: "suppliers/create", component: CreateSupplier },
       { path: "suppliers/edit/:id", component: UpdateSupplier },
+      { path: "suppliers/show/:id", component: ShowSupplier },
 
       // Products
       { path: "products", component: ManageProduct },
       { path: "products/create", component: CreateProduct },
       { path: "products/edit/:id", component: UpdateProduct },
+      { path: "products/show/:id", component: ShowProduct },
 
       // Users
       { path: "users", component: ManageUser },

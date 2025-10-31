@@ -2,8 +2,11 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
           <h3 class="mb-0">Create Supplier</h3>
+          <button class="btn btn-dark" @click="router.back()">
+            ← Back
+          </button>
         </div>
 
         <div class="card-body">

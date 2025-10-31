@@ -2,8 +2,11 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header bg-primary text-white">
-          <h5 class="mb-0">Create Customer</h5>
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h3 class="mb-0">Create Customer</h3>
+          <button class="btn btn-dark" @click="router.back()">
+            ← Back
+          </button>
         </div>
 
         <div class="card-body">
@@ -60,7 +63,7 @@ const customerData = reactive({
 
 const submitData = () => {
   const formData = new FormData();
-  
+
   for (const key in customerData) {
     formData.append(key, customerData[key]);
   }

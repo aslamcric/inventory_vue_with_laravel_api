@@ -3,30 +3,27 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">View Category</h3>
+                    <h3 class="mb-0">Category Details</h3>
                 </div>
 
-                <!-- {{ categoryData }} -->
-
                 <div class="card-body">
-                    <form @submit.prevent="updateData">
-                        <div class="app-form">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <!-- Set the input to readonly to prevent editing -->
-                                <input v-model="categoryData.name" type="text" class="form-control" id="name"
-                                    placeholder="Enter product name" readonly />
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <!-- Set the input to readonly to prevent editing -->
-                                <input v-model="categoryData.description" type="text" class="form-control"
-                                    id="description" placeholder="Enter description" readonly />
-                            </div>
-
+                    <div class="app-form">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Name</label>
+                            <p class="form-control-plaintext">{{ categoryData.name }}</p>
                         </div>
-                    </form>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <p class="form-control-plaintext">
+                                {{ categoryData.description || "No description available." }}
+                            </p>
+                        </div>
+
+                        <div>
+                            <button class="btn btn-secondary" @click="router.back()">Back</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,41 +32,46 @@
 
 <script setup>
 import api from '@/Api';
-import { onMounted, reactive } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const { id } = useRoute().params
-// console.log(id);
-
+const { id } = useRoute().params;
 const router = useRouter();
 
 const categoryData = reactive({
-    "id": "",
-    "name": "",
-    "description": ""
-})
-
-onMounted(() => {
-    fetchCategories();
+    id: "",
+    name: "",
+    description: ""
 });
 
-// fetchCategory
-const fetchCategories = () => {
-    api.get(`/categories/${id}`)
-        .then((result) => {
-            console.log(result);
-            const category = result.data.category
+const loading = ref(true);
 
-            categoryData.id = category.id;
-            categoryData.name = category.name;
-            categoryData.description = category.description;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+onMounted(() => {
+    fetchCategory();
+});
+
+// Fetch category details
+const fetchCategory = async () => {
+    try {
+        const res = await api.get(`/categories/${id}`);
+        const category = res.data.category;
+
+        categoryData.id = category.id;
+        categoryData.name = category.name;
+        categoryData.description = category.description;
+    } catch (err) {
+        console.log(err);
+    } finally {
+        loading.value = false;
+    }
 };
-
-
 </script>
 
-<style></style>
+<style scoped>
+.form-control-plaintext {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px 12px;
+    background-color: #f9f9f9;
+}
+</style>

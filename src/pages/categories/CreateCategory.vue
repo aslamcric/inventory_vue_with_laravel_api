@@ -3,8 +3,11 @@
 
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h3 class="mb-0">Create Category</h3>
+                    <button class="btn btn-dark" @click="router.back()">
+                        ← Back
+                    </button>
                 </div>
 
                 <!-- {{ categoryData }} -->
@@ -49,13 +52,13 @@ const categoryData = reactive({
 
 const createCategory = () => {
     api.post("/categories", categoryData)
-    .then((result) => {
-        console.log(result);
-        router.push({ path: "/categories" });
-    }).catch((err) => {
-        console.log(err);
-        
-    });
+        .then((result) => {
+            console.log(result);
+            router.push({ path: "/categories" });
+        }).catch((err) => {
+            console.log(err);
+
+        });
 }
 
 </script>
