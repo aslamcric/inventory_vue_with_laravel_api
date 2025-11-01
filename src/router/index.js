@@ -55,13 +55,22 @@ import ManagePurchaseDetail from "@/pages/purchaseDetail/ManagePurchaseDetail.vu
 import ManageStock from "@/pages/stocks/ManageStock.vue";
 import OrderReport from "@/pages/reports/OrderReport.vue";
 import PurchaseReport from "@/pages/reports/PurchaseReport.vue";
+import Sign_up from "@/pages/logingRegister/Sign_up.vue";
 
 const routes = [
-  // Public route: Login
+  // Login
   {
     path: "/login",
     name: "Login",
     component: Sign_in,
+    meta: { public: true },
+  },
+
+  // Register
+  {
+    path: "/register",
+    name: "Register",
+    component: Sign_up,
     meta: { public: true },
   },
 

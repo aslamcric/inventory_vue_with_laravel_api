@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col">
       <div class="card">
+
         <!-- Header -->
         <div
           class="card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -18,10 +19,8 @@
             </div>
           </form>
 
-          <!-- Add user button -->
-          <RouterLink to="/users/create" class="btn btn-dark">
-            Add New User
-          </RouterLink>
+          <!-- Add new user button -->
+          <!-- <RouterLink to="/users/create" class="btn btn-dark">Add New User</RouterLink> -->
         </div>
 
         <!-- Table -->
@@ -32,29 +31,24 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <!-- <th class="text-center">Action</th> -->
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
-              <!-- Show message when no data -->
               <tr v-if="users.data && users.data.length === 0">
                 <td colspan="4" class="text-center text-danger">
-                  <h3>No data found!</h3>
+                  <h5>No data found!</h5>
                 </td>
               </tr>
 
-              <!-- Loop through users -->
               <tr v-for="user in users.data" :key="user.id">
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
-                <td class="text-center">
-                  <!-- <RouterLink :to="`/users/edit/${user.id}`" class="btn btn-sm btn-primary me-2">
-                    Edit
-                  </RouterLink>
+                <td class="text-center btn btn-group">
                   <button class="btn btn-sm btn-danger" @click="deleteUser(user.id)">
-                    Delete
-                  </button> -->
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -74,71 +68,59 @@
             </ul>
           </nav>
         </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import api from "@/Api";
-import { onMounted, reactive, ref } from "vue";
+import { ref, onMounted } from 'vue';
+import api from '@/Api';
 
-const users = ref([]);
+const users = ref({ data: [], links: [] });
 const search = ref("");
 
-const form = reactive({
-  name: "",
-  email: "",
-  password: ""
-});
+// Fetch users with optional pagination URL
+const fetchUsers = (url = "/allUser") => {
+  if (typeof url !== "string") {
+    url = "/allUser"
+  }
 
-onMounted(() => {
-  fetchUsers();
-});
-
-const fetchUsers = (url = "/users") => {
-  if (typeof url !== "string") url = "/users";
-  api
-    .get(url, { params: { search: search.value } })
-    .then((result) => {
-      users.value = result.data;
+  // Always include search parameter
+  api.get(url, { params: { search: search.value } })
+    .then(res => {
+      console.log("Fetched users:", res.data); // <-- see data in console
+      users.value = res.data;
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch(err => console.error("Error fetching users:", err));
 };
 
-const submitUser = () => {
-  api
-    .post("/users", form)
-    .then((res) => {
-      console.log(res.data);
-      fetchUsers(); // Refresh list after submit
-      form.name = "";
-      form.email = "";
-      form.password = "";
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
+// Delete user
 const deleteUser = (id) => {
-  api
-    .delete(`/users/${id}`)
-    .then((res) => {
-      fetchUsers();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (!confirm("Are you sure you want to delete this user?")) return;
+
+  api.delete(`/users/${id}`)
+    .then(() => fetchUsers()) // refresh list
+    .catch(err => console.error("Error deleting user:", err));
 };
 
+// Pagination labels
 const formatPageLabel = (label) => {
   if (label === "&laquo; Previous") return "Previous";
   if (label === "Next &raquo;") return "Next";
   return label;
 };
+
+// Initial load
+onMounted(() => {
+  fetchUsers();
+});
 </script>
 
-<style scoped></style>
+<style scoped>
+.table th,
+.table td {
+  vertical-align: middle;
+}
+</style>

@@ -282,7 +282,7 @@
             <a @click="logout" class="dropdown-item logout pb-0"><img src="/assets/img/log-out.svg" class="me-2"
                 alt="img">Logout </a>
 
-                <!-- <a @click="logout"><i data-feather="log-out"></i><span>Logout</span> </a> -->
+            <!-- <a @click="logout"><i data-feather="log-out"></i><span>Logout</span> </a> -->
           </div>
         </div>
       </li>
@@ -294,8 +294,8 @@
       <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
           class="fa fa-ellipsis-v"></i></a>
       <div class="dropdown-menu dropdown-menu-right">
-        <a class="dropdown-item" href="profile.html">My Profile</a>
-        <a class="dropdown-item" href="general-settings.html">Settings</a>        
+        <!-- <a class="dropdown-item" href="profile.html">My Profile</a>
+        <a class="dropdown-item" href="general-settings.html">Settings</a> -->
         <a @click="logout" class="dropdown-item">Logout </a>
       </div>
     </div>
@@ -319,8 +319,6 @@ const logout = () => {
     console.log(error);
 
   }
-
-
 }
 </script>
 

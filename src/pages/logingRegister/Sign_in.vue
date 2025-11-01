@@ -42,7 +42,11 @@
                             <div class="signinform">
                                 <h4>
                                     New on our platform?
-                                    <a href="#" class="hover-a">Create an account</a>
+                                    <!-- <a href="#" class="hover-a">Create an account</a> -->
+                                    <RouterLink to="/register"><span>Create an
+                                            account</span>
+                                    </RouterLink>
+
                                 </h4>
                             </div>
 
@@ -54,36 +58,7 @@
     </div>
 </template>
 
-<!-- <script setup>
-import { reactive, ref, nextTick } from "vue";
-import { useRouter } from "vue-router";
-import { useAuthStore } from "@/store/AuthStore";
 
-const loginObj = reactive({
-    email: "",
-    password: "",
-});
-
-const errorMessage = ref("");
-const auth = useAuthStore();
-const router = useRouter();
-
-const handleLogin = async () => {
-    errorMessage.value = "";
-
-    try {
-        await auth.login(loginObj);  // login & save token
-        await auth.fetchUser();      // fetch user info
-        await nextTick();
-        router.push("/dashboard");   // redirect to dashboard
-    } catch (err) {
-        console.error("Login failed:", err);
-        errorMessage.value = err.response?.data?.message || "Invalid email or password";
-    }
-};
-</script> -->
-
-<!-- inside Sign_in.vue (script) -->
 <script setup>
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -103,16 +78,16 @@ const handleLogin = async () => {
     errorMessage.value = "";
 
     try {
-        // 1. call login -> sets token in store + axios header
+        // call login -> sets token in store + axios header
         await auth.login(loginObj);
 
-        // 2. fetch user details and set in store
+        // fetch user details and set in store
         await auth.fetchUser();
 
         // ensure reactivity updates
         await nextTick();
 
-        // 3. navigate to dashboard
+        // navigate to dashboard
         router.push("/dashboard");
     } catch (err) {
         console.error("Login failed:", err);

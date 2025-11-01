@@ -47,7 +47,7 @@
                                 <td>{{ item.purchase_id }}</td>
                                 <td>{{ item.product.name }}</td>
                                 <td>{{ item.product_id }}</td>
-                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.qty }}</td>
                                 <td>{{ item.price }}</td>
                                 <td>{{ item.discount ?? 0 }}</td>
                             </tr>
@@ -90,6 +90,7 @@ const fetchPurchaseItems = (url = '/purchaseDetail') => {
 
     api.get(url, { params: { search: search.value } })
         .then((res) => {
+            console.log(res.data);            
             purchaseItems.value = res.data;
         })
         .catch((err) => console.error(err));
