@@ -14,25 +14,21 @@ import NotFound from "@/pages/NotFound.vue";
 import CreateCategory from "@/pages/categories/CreateCategory.vue";
 import ManageCategory from "@/pages/categories/ManageCategory.vue";
 import UpdateCategory from "@/pages/categories/UpdateCategory.vue";
-import ShowCategory from "@/pages/categories/ShowCategory.vue";
 
 // Customers
 import CreateCustomer from "@/pages/customers/CreateCustomer.vue";
 import ManageCustomer from "@/pages/customers/ManageCustomer.vue";
 import UpdateCustomer from "@/pages/customers/UpdateCustomer.vue";
-import ShowCustomer from "@/pages/customers/ShowCustomer.vue";
 
 // Suppliers
 import CreateSupplier from "@/pages/suppliers/CreateSupplier.vue";
 import ManageSupplier from "@/pages/suppliers/ManageSupplier.vue";
 import UpdateSupplier from "@/pages/suppliers/UpdateSupplier.vue";
-import ShowSupplier from "@/pages/suppliers/ShowSupplier.vue";
 
 // Products
 import CreateProduct from "@/pages/products/CreateProduct.vue";
 import ManageProduct from "@/pages/products/ManageProduct.vue";
 import UpdateProduct from "@/pages/products/UpdateProduct.vue";
-import ShowProduct from "@/pages/products/ShowProduct.vue";
 
 // Users
 import CreateUser from "@/pages/users/CreateUser.vue";
@@ -55,17 +51,16 @@ import ManagePurchaseDetail from "@/pages/purchaseDetail/ManagePurchaseDetail.vu
 import ManageStock from "@/pages/stocks/ManageStock.vue";
 import OrderReport from "@/pages/reports/OrderReport.vue";
 import PurchaseReport from "@/pages/reports/PurchaseReport.vue";
+import ShowProduct from "@/pages/products/ShowProduct.vue";
+import ShowCategory from "@/pages/categories/ShowCategory.vue";
+import ShowCustomer from "@/pages/customers/ShowCustomer.vue";
+import ShowSupplier from "@/pages/suppliers/ShowSupplier.vue";
 
 const routes = [
   // Public route: Login
-  {
-    path: "/login",
-    name: "Login",
-    component: Sign_in,
-    meta: { public: true },
-  },
+  { path: "/login", name: "Login", component: Sign_in, meta: { public: true } },
 
-  // Protected routes
+  // Protected routes inside MainLayout
   {
     path: "/",
     component: MainLayout,
@@ -134,19 +129,6 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-});
-
-router.beforeEach((to, from, next) => {
-  // allow public routes explicitly marked with meta.public = true
-  if (to.meta && to.meta.public) return next();
-
-  const auth = useAuthStore();
-
-  // if token exists we allow, else redirect to login
-  if (auth.token) return next();
-
-  // Not authenticated -> go to login
-  return next({ path: "/login" });
 });
 
 export default router;
